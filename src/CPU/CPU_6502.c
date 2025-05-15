@@ -21,3 +21,7 @@ unsigned char status = 0; //This register records some flags that change how the
 //bit 4 : break command - Set when BRK instruction is executed and an interrupt was generated to process it
 //bit 5 : overflow flag - Set when arithmetic operation yieled and invalid two's compliment result
 //bit 6 : negative flag - Set if the result of the previous operation had bit 7 set to one
+
+void execute(){
+
+}
