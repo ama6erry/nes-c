@@ -84,6 +84,16 @@ typedef struct instruction {
   addressMode mode;
 } Instruction;
 
+
+//unsigned char status = 0; //This register records some flags that change how the processor functions
+//bit 0 : carry flag - Set if the last operation caused an overflow or an underflow
+//bit 1 : zero flag - Set if the last operation was zero
+//bit 2 : interrupt disable - Set if program executed SEI (Set Interrupt Disable) instruction
+//bit 3 : decimal mode - While set, processor obeys the rules of Binary Coded Decimal during addition and subtraction
+//bit 4 : break command - Set when BRK instruction is executed and an interrupt was generated to process it
+//bit 5 : overflow flag - Set when arithmetic operation yieled and invalid two's compliment result
+//bit 6 : negative flag - Set if the result of the previous operation had bit 7 set to one
+
 Instruction InstructionTable[256] = {
   //    Low 
   //High |    x0    |    x1    |  x2  |  x3  |    x4    |    x5    |    x6    |  x7  |    x8    |    x9    |    xA    |  xB  |  xC  |    xD    |    xE    |  xF  |
@@ -103,6 +113,16 @@ Instruction InstructionTable[256] = {
   /* Dx */{BNE, REL} ,{CMP, IDY},NOPER,NOPER,   NOPER,  {CMP, ZPX}, {DEC, ZPX},NOPER, {CLD, IMPL},{CMP,ABY},  NOPER,   NOPER, NOPER, {CMP, ABX} ,{DEC,ABX}, NOPER, 
   /* Ex */{CPX, IMM} ,{SBC, IDX},NOPER,NOPER, {CPX,ZPG},{SBC, ZPG}, {INC, ZPG},NOPER, {INX, IMPL},{SBC,IMM},{NOP,IMPL},NOPER,{CPX,ABS},{SBC,ABS},{INC,ABS}, NOPER,
   /* Fx */{BEQ, REL} ,{SBC, IDY},NOPER,NOPER,   NOPER,  {SBC, ZPX}, {INC, ZPX},NOPER, {SED, IMPL},{SBC,ABY},  NOPER,   NOPER, NOPER, {SBC, ABX} ,{INC,ABX}, NOPER
+}
+
+typedef struct cpu {
+  unsigned short pc;
+  unsigned char sp;
+  unsigned char acc;
+  unsigned char iX;
+  unsigned char IY;
+  unsigned char status;
+  Instruction current_instruction;
 }
 
 #endif // !CPU_6502_H
